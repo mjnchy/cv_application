@@ -1,7 +1,7 @@
-function LeftPanel() {
+function SidePanel() {
   const link = "Some link"
   return (
-    <div className="panel left-panel">
+    <div className="panel" id="side-panel">
       <Progression />
 
       <footer className="footer">
@@ -17,7 +17,7 @@ function Progression() {
       <ul className="progression-list">
         <li className="progression-item">
           <span className="number-container">
-            <div className="number-div active">
+            <div className="number-div">
               <span className="number">1</span>
             </div>
             <div className="number-line"></div>
@@ -50,7 +50,6 @@ function Progression() {
             <div className="number-div">
               <span className="number">4</span>
             </div>
-            <div className="number-line"></div>
           </span>
           <span className="item">Experience</span>
         </li>
@@ -61,4 +60,4 @@ function Progression() {
   )
 };
 
-export default LeftPanel;
+export default SidePanel;

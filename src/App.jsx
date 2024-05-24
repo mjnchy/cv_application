@@ -1,8 +1,14 @@
-import LeftPanel from "./components/LeftPanel";
+import SidePanel from "./components/SidePanel";
+import Form from "./components/form/Form";
 
 function App() {
   return (
-    <LeftPanel />
+    <>
+      <SidePanel />
+      <main className="main" id="main">
+        <Form />
+      </main>
+    </>
   );
 };
 

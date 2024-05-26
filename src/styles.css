@@ -68,7 +68,7 @@
 }
 
 .form {
-  display: flex;
+  /* display: flex; */
   width: 800px;
   margin: auto;
   overflow: hidden;

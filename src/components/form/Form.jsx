@@ -1,12 +1,14 @@
+import Education from "./Education";
 import Introduction from "./Introduction";
 
 function Form() {
   return (
-    <div className="form">
+    <form className="form">
       <Introduction />
+      <Education />
       <button type="button">Go back</button>
       <button type="button">Next</button>
-    </div>
+    </form>
   );
 };
 

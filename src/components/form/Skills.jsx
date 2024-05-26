@@ -12,7 +12,7 @@ function Skills() {
       <button 
         className="button add-btn fa-solid fa-plus"
         type="button" 
-        onClick={() => setSchlCnt(schlCnt + 1)}>
+        onClick={() => setSkillCnt(schlCnt + 1)}>
         Add Another Skill
       </button>
     </div>

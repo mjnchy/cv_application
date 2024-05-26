@@ -9,19 +9,24 @@ function Skills() {
   return (
     <div className="skills form-page">
       {skills}
-      <button className="button add-segment" type="button" onClick={() => setSkillCnt(skillCnt + 1)}>Add Another Skill</button>
+      <button 
+        className="button add-btn fa-solid fa-plus"
+        type="button" 
+        onClick={() => setSchlCnt(schlCnt + 1)}>
+        Add Another Skill
+      </button>
     </div>
   );
 };
 
 function Skill({ index }) {
   return (
-    <>
+    <div className="segment">
       <div className="form-section">
         <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} />
         <Field id={`skill-${index}-experience`} labelText="Experience" name={`skill${index}Experience`} />
       </div>
-    </>
+    </div>
   );
 };
 

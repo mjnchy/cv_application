@@ -1,5 +1,7 @@
 :root {
   --accent: #132544;
+  --accent2: #dd9000b3;
+  --accent-2-hover: #dd9000e6;
   --color1: #d9dde2;
   --speed: 500ms;
 }
@@ -26,6 +28,12 @@
 #main {
   width: 100vw;
   padding-left: clamp(200px, 20vw, 300px);
+}
+
+.button {
+  display: block;
+  cursor: pointer;
+  transition: calc(var(--speed) / 2);
 }
 
 .progression, .footer {
@@ -71,14 +79,12 @@
 }
 
 .form {
-  /* display: flex; */
-  width: 650px;
+  max-width: 650px;
   margin: auto;
   overflow: hidden;
 }
 
 .form-page {
-  margin: auto;
   transition: var(--speed);
 }
 
@@ -117,17 +123,33 @@
 }
 
 .add-btn {
-  cursor: pointer;
   color: var(--accent);
   font-weight: 600;
-  width: 655px;
   height: 45px;
+  width: 100%;
+  margin: auto auto 20px;
   background-color: transparent;
   border: 2px solid var(--accent);
   border-radius: 5px;
-  transition: calc(var(--speed) / 2);
 } 
 
 .add-btn:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.form-nav-btn.prev {
+  background-color: transparent;
+  border: none;
+}
+
+.form-nav-btn.next, .form-nav-btn.save {
+  padding: 15px;
+  margin: auto 0 auto auto;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--accent2);
+}
+
+.form-nav-btn.next:hover, .form-nav-btn.save:hover {
+  background-color: var(--accent-2-hover);
 }

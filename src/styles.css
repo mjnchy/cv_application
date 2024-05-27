@@ -79,12 +79,25 @@
 }
 
 .form {
-  max-width: 650px;
+  max-width: 750px;
   margin: auto;
   overflow: hidden;
 }
 
+.form-welcome {
+  margin: 25px auto 50px;
+}
+
+.form-welcome-header {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 25px auto;
+}
+
 .form-page {
+  width: 95%;
+  max-width: 700px;
+  margin: auto;
   transition: var(--speed);
 }
 
@@ -127,7 +140,8 @@
   font-weight: 600;
   height: 45px;
   width: 100%;
-  margin: auto auto 20px;
+  max-width: 650px;
+  margin: auto 0 20px;
   background-color: transparent;
   border: 2px solid var(--accent);
   border-radius: 5px;
@@ -138,13 +152,16 @@
 }
 
 .form-nav-btn.prev {
+  display: block;
+  height: 20px;
   background-color: transparent;
   border: none;
+  margin: 50px 0 auto;
 }
 
 .form-nav-btn.next, .form-nav-btn.save {
   padding: 15px;
-  margin: auto 0 auto auto;
+  margin: auto 10px auto auto;
   border: none;
   border-radius: 25px;
   background-color: var(--accent2);

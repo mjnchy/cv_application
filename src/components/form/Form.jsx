@@ -15,7 +15,7 @@ function Form() {
 
   return (
     <form className="form">
-      {segment < 1 ? null :
+      {segment < 1 ? <span className="form-nav-btn prev"></span> :
         <button 
           className="button form-nav-btn prev" 
           type="button" 

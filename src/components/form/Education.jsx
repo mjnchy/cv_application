@@ -7,14 +7,23 @@ function Education() {
   for (let i = 0; i <= schlCnt; i++) schools.push(<School index={i} key={i} />);
 
   return (
-    <div className="education form-page">
-      {schools}
-      <button 
-        className="button add-btn fa-solid fa-plus"
-        type="button" 
-        onClick={() => setSchlCnt(schlCnt + 1)}>
-        Add Another School
-      </button>
+    <div className="form-page">
+      <div className="form-welcome">
+        <h2 className="form-welcome-header">Tell us about your educational background.</h2>
+        <p className="form-welcome-extension">
+          This section informs employers about your educational background.
+        </p>
+      </div>
+
+      <div className="education form-container">
+        {schools}
+        <button 
+          className="button add-btn fa-solid fa-plus"
+          type="button" 
+          onClick={() => setSchlCnt(schlCnt + 1)}>
+          Add Another School
+        </button>
+      </div>
     </div>
   );
 };

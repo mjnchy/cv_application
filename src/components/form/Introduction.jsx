@@ -25,7 +25,7 @@ function Introduction() {
         </div>
 
         <div className="contact form-section">
-          <Field id="email" labelText="Email" name="email" />
+          <Field id="email" labelText="Email *" name="email" />
           <Field id="phone" labelText="Phone" name="phone" />
         </div>
       </div>

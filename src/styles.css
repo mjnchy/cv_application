@@ -4,6 +4,7 @@
   --accent-2-hover: #dd9000e6;
   --color1: #d9dde2;
   --speed: 500ms;
+  font-size: 10px;
 }
 
 * {
@@ -13,9 +14,11 @@
 #root {
   height: 100vh;
   width: 100vw;
+  font-size: 1.2rem;
 }
 
 #side-panel {
+  font-size: 1.6rem;
   position: fixed;
   width: clamp(200px, 20vw, 300px);
   height: 100vh;
@@ -92,6 +95,12 @@
   font-size: 3rem;
   font-weight: 700;
   margin: 25px auto;
+  line-height: 1.25;
+}
+
+.form-welcome-extension {
+  font-size: 1.4rem;
+  line-height: 1.5;
 }
 
 .form-page {
@@ -152,8 +161,11 @@
 }
 
 .form-nav-btn.prev {
-  display: block;
+  color: blue;
+  display: flex;
   height: 20px;
+  gap: 5px;
+  align-items: center;
   background-color: transparent;
   border: none;
   margin: 50px 0 auto;

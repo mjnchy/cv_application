@@ -39,20 +39,16 @@ function Form() {
       for (let i = 0; i <= length; i++) cv[type].push({});
       for (let i = 0; i < formData.length; i++) {
         const index = parseInt(formData[i][0].slice(str.length, str.length + 1));
-        const prop = formData[i][0].slice(7).toLowerCase();
+        const prop = formData[i][0].slice(str.length + 1).toLowerCase();
 
         cv[type][index][prop] = formData[i][1];
       };
     };
-    console.log(cv);
     segment >= segments.length - 1 ? null : setSegment(segment + 1);
   };
 
   return (
-    <form className="form" onSubmit={e => {
-      e.preventDefault();
-      segments[segment][2]();
-    }}>
+    <form className="form">
       {segment < 1 ? <span className="form-nav-btn prev"></span> :
         <button 
           className="button form-nav-btn prev" 

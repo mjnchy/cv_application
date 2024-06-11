@@ -15,9 +15,9 @@ function Form() {
   const [segment, setSegment] = useState(0);
   const segments = [
     [ <Introduction name={cv.name} address={cv.address} contact={cv.contact} />, "Introduction", () => updateCV(false) ],
-    [ <Education />, "Education", () => updateCV(true, "schools", "school") ],
-    [ <Skills />, "Skills", () => updateCV(true, "skills", "skill") ],
-    [ <Experience />, "Work Experience", () => updateCV(true, "experience", "work") ]
+    [ <Education arr={cv.schools} cnt={cv.schools.length - 1} />, "Education", () => updateCV(true, "schools", "school") ],
+    [ <Skills arr={cv.skills} cnt={cv.skills.length - 1} />, "Skills", () => updateCV(true, "skills", "skill") ],
+    [ <Experience arr={cv.experience} cnt={cv.experience.length - 1} />, "Work Experience", () => updateCV(true, "experience", "work") ]
   ];
 
   function updateCV(iterable, type, str) {
@@ -36,7 +36,7 @@ function Form() {
     } else {
       const length = parseInt(formData.at(-1)[0].slice(str.length, str.length + 1));
 
-      for (let i = 0; i <= length; i++) cv[type].push({});
+      for (let i = 0; i <= length; i++) cv[type][i] = {};
       for (let i = 0; i < formData.length; i++) {
         const index = parseInt(formData[i][0].slice(str.length, str.length + 1));
         const prop = formData[i][0].slice(str.length + 1).toLowerCase();

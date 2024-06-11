@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Field from "./Field";
 
-function Skills() {
-  const [skillCnt, setSkillCnt] = useState(0);
+function Skills({ arr, cnt }) {
+  const [skillCnt, setSkillCnt] = useState(Math.max(0, cnt));
   const skills = [];
-  for (let i = 0; i <= skillCnt; i++) skills.push(<Skill index={i} key={i} />);
+  for (let i = 0; i <= skillCnt; i++) skills.push(<Skill index={i} skill={arr[i]} key={i} />);
 
   return (
     <div className="form-page">
@@ -28,12 +28,13 @@ function Skills() {
   );
 };
 
-function Skill({ index }) {
+function Skill({ index, skill }) {
+  skill ? null : skill = { name: "", experience: "" };
   return (
     <div className="segment">
       <div className="form-section">
-        <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} />
-        <Field id={`skill-${index}-experience`} labelText="Experience" name={`skill${index}Experience`} />
+        <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} value={skill.name} />
+        <Field id={`skill-${index}-experience`} labelText="Experience" name={`skill${index}Experience`} value={skill.experience} />
       </div>
     </div>
   );

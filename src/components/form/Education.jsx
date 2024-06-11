@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Field from "./Field";
 
-function Education() {
-  const [schlCnt, setSchlCnt] = useState(0);
+function Education({ arr, cnt }) {
+  const [schlCnt, setSchlCnt] = useState(Math.max(0, cnt));
   const schools = [];
-  for (let i = 0; i <= schlCnt; i++) schools.push(<School index={i} key={i} />);
+  for (let i = 0; i <= schlCnt; i++) schools.push(<School index={i} school={arr[i]} key={i} />);
 
   return (
     <div className="form-page">
@@ -28,22 +28,23 @@ function Education() {
   );
 };
 
-function School({ index }) {
+function School({ index, school }) {
+  school ? null : school = { name: "", location: "", degree: "", major: "", graddate: "" }
   return (
     <div className="segment">
       <div className="form-section">
-        <Field id={`school-${index}-name`} labelText="School Name" name={`school${index}Name`} />
-        <Field id={`school-${index}-locaiton`} labelText="School Location" name={`school${index}Location`} />
+        <Field id={`school-${index}-name`} labelText="School Name" name={`school${index}Name`} value={school.name} />
+        <Field id={`school-${index}-locaiton`} labelText="School Location" name={`school${index}Location`} value={school.location} />
       </div>
 
       <div className="form-section">
-        <Field id={`school-${index}-degree`} labelText="Degree" name={`school${index}Degree`} />
+        <Field id={`school-${index}-degree`} labelText="Degree" name={`school${index}Degree`} value={school.degree} />
         <span className="field"></span>
       </div>
       
       <div className="form-section">
-        <Field id={`school-${index}-major`} labelText="Field Of Study" name={`school${index}Major`} />
-        <Field id={`school-${index}-grad-date`} labelText="Graduation Date (Or Expected)" name={`school${index}GradDate`} inputType="date" />
+        <Field id={`school-${index}-major`} labelText="Field Of Study" name={`school${index}Major`} value={school.major} />
+        <Field id={`school-${index}-grad-date`} labelText="Graduation Date (Or Expected)" name={`school${index}GradDate`} inputType="date" value={school.graddate} />
       </div>
     </div>
   );

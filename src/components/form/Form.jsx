@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Field from "./Field";
 
-const cv = {
+const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) : {
   name: { first: "", last: "" },
   address: { city: "", region: "", zip: "" },
   contact: { email: "", phone: ""},
@@ -41,16 +41,36 @@ function Form() {
         cv[type][index][prop] = formData[i][1];
       };
     };
-    segment >= segments.length - 1 ? null : setSegment(segment + 1);
+    segment >= segments.length - 1 ? null : updateSegment(segment + 1);
   };
 
+  function updateSegment(newSegment) {
+    setSegment(() => {
+      updateActiveItem(newSegment);
+      return newSegment;
+    });
+  };
+
+  function updateActiveItem(item) {
+    const active = document.querySelector(".progression-item.active");
+    !active ? null : active.classList.toggle("active");
+    const progressionList = document.querySelector(".progression-list");
+    progressionList.children[item].classList.add("active");
+  };
+
+  window.onload = () => updateActiveItem(segment);
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={e => {
+      e.preventDefault();
+      segments[segment][2]();
+      localStorage.setItem("cv", JSON.stringify(cv));
+    }} >
       {segment < 1 ? <span className="form-nav-btn prev"></span> :
         <button 
           className="button form-nav-btn prev" 
           type="button" 
-          onClick={() => setSegment(segment - 1)}>
+          onClick={() => updateSegment(segment - 1)}>
           <i className="fa-solid fa-arrow-left"></i>
           <span className="btn-text-container">Go Back</span>
         </button>

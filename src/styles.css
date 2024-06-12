@@ -81,6 +81,14 @@
   margin: 7.5px 0;
 }
 
+.progression-item.active > .number-container > .number-div {
+  background-color: var(--color1);
+}
+
+.progression-item.active > .number-container > .number-div > .number {
+  color: var(--accent);
+}
+
 .form {
   max-width: 750px;
   margin: auto;

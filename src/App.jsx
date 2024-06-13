@@ -1,5 +1,5 @@
 import SidePanel from "./components/SidePanel";
-import CV from "./components/cv/cv";
+import CV from "./components/cv/template1/cv";
 import Form from "./components/form/Form";
 
 const cv = JSON.parse(localStorage.getItem("cv"));

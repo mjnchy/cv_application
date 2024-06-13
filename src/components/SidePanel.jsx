@@ -3,7 +3,6 @@ function SidePanel() {
   return (
     <div className="panel" id="side-panel">
       <Progression />
-
       <footer className="footer">
         <a href={link}>{link}</a>
       </footer>

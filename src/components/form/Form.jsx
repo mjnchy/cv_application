@@ -8,7 +8,7 @@ const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) :
   schools: [], skills: [], experience: []
 };
 
-function Form() {
+function Form({ onSubmit }) {
   const [segment, setSegment] = useState(0);
   const segments = [
     [ <Introduction name={cv.name} address={cv.address} contact={cv.contact} />, "Introduction", () => updateCV(false) ],
@@ -65,6 +65,7 @@ function Form() {
       e.preventDefault();
       segments[segment][2]();
       localStorage.setItem("cv", JSON.stringify(cv));
+      onSubmit();
     }} >
       {segment < 1 ? <span className="form-nav-btn prev"></span> :
         <button 

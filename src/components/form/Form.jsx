@@ -134,6 +134,28 @@ function Education({ arr, cnt }) {
   const schools = [];
   for (let i = 0; i <= schlCnt; i++) schools.push(<School index={i} school={arr[i]} key={i} />);
 
+  function School({ index, school }) {
+    school ? null : school = { name: "", location: "", degree: "", major: "", graddate: "" }
+    return (
+      <div className="segment">
+        <div className="form-section">
+          <Field id={`school-${index}-name`} labelText="School Name" name={`school${index}Name`} value={school.name} />
+          <Field id={`school-${index}-locaiton`} labelText="School Location" name={`school${index}Location`} value={school.location} />
+        </div>
+
+        <div className="form-section">
+          <Field id={`school-${index}-degree`} labelText="Degree" name={`school${index}Degree`} value={school.degree} />
+          <span className="field"></span>
+        </div>
+
+        <div className="form-section">
+          <Field id={`school-${index}-major`} labelText="Field Of Study" name={`school${index}Major`} value={school.major} />
+          <Field id={`school-${index}-grad-date`} labelText="Graduation Date (Or Expected)" name={`school${index}GradDate`} inputType="date" value={school.graddate} />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="form-page">
       <div className="form-welcome">
@@ -156,32 +178,23 @@ function Education({ arr, cnt }) {
   );
 };
 
-function School({ index, school }) {
-  school ? null : school = { name: "", location: "", degree: "", major: "", graddate: "" }
-  return (
-    <div className="segment">
-      <div className="form-section">
-        <Field id={`school-${index}-name`} labelText="School Name" name={`school${index}Name`} value={school.name} />
-        <Field id={`school-${index}-locaiton`} labelText="School Location" name={`school${index}Location`} value={school.location} />
-      </div>
-
-      <div className="form-section">
-        <Field id={`school-${index}-degree`} labelText="Degree" name={`school${index}Degree`} value={school.degree} />
-        <span className="field"></span>
-      </div>
-      
-      <div className="form-section">
-        <Field id={`school-${index}-major`} labelText="Field Of Study" name={`school${index}Major`} value={school.major} />
-        <Field id={`school-${index}-grad-date`} labelText="Graduation Date (Or Expected)" name={`school${index}GradDate`} inputType="date" value={school.graddate} />
-      </div>
-    </div>
-  );
-};
 
 function Skills({ arr, cnt }) {
   const [skillCnt, setSkillCnt] = useState(Math.max(0, cnt));
   const skills = [];
   for (let i = 0; i <= skillCnt; i++) skills.push(<Skill index={i} skill={arr[i]} key={i} />);
+
+  function Skill({ index, skill }) {
+    skill ? null : skill = { name: "", experience: "" };
+    return (
+      <div className="segment">
+        <div className="form-section">
+          <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} value={skill.name} />
+          <Field id={`skill-${index}-experience`} labelText="Experience" name={`skill${index}Experience`} value={skill.experience} />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="form-page">
@@ -205,22 +218,27 @@ function Skills({ arr, cnt }) {
   );
 };
 
-function Skill({ index, skill }) {
-  skill ? null : skill = { name: "", experience: "" };
-  return (
-    <div className="segment">
-      <div className="form-section">
-        <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} value={skill.name} />
-        <Field id={`skill-${index}-experience`} labelText="Experience" name={`skill${index}Experience`} value={skill.experience} />
-      </div>
-    </div>
-  );
-};
 
 function Experience({ arr, cnt }) {
   const [jobCnt, setJobCnt] = useState(Math.max(0, cnt));
   const jobs = [];
   for (let i = 0; i <= jobCnt; i++) jobs.push(<Job index={i} work={arr[i]} key={`job${i}`} />);
+
+  function Job({ index, work }) {
+    work ? null : work = { name: "", employer: "", from: "", to: "" };
+    return (
+      <div className="segment">
+        <div className="form-section">
+          <Field id={`work-${index}-name`} labelText="Job" name={`work${index}Name`} value={work.name} />
+          <Field id={`work-${index}-employer`} labelText="Employer" name={`work${index}Employer`} value={work.employer} />
+        </div>
+        <div className="form-section">
+          <Field id={`work-${index}-from`} labelText="From" name={`work${index}From`} inputType="date" value={work.from} />
+          <Field id={`work-${index}-to`} labelText="To" name={`work${index}To`} inputType="date" value={work.to} />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="form-page">
@@ -240,22 +258,6 @@ function Experience({ arr, cnt }) {
           onClick={() => setJobCnt(jobCnt + 1)}>
           Add Another Work Experience
         </button>
-      </div>
-    </div>
-  );
-};
-
-function Job({ index, work }) {
-  work ? null : work = { name: "", employer: "", from: "", to: "" };
-  return (
-    <div className="segment">
-      <div className="form-section">
-        <Field id={`work-${index}-name`} labelText="Job" name={`work${index}Name`} value={work.name} />
-        <Field id={`work-${index}-employer`} labelText="Employer" name={`work${index}Employer`} value={work.employer} />
-      </div>
-      <div className="form-section">
-        <Field id={`work-${index}-from`} labelText="From" name={`work${index}From`} inputType="date" value={work.from} />
-        <Field id={`work-${index}-to`} labelText="To" name={`work${index}To`} inputType="date" value={work.to} />
       </div>
     </div>
   );

@@ -1,5 +1,22 @@
 import { useState } from "react";
-import Field from "./Field";
+import { Dropdown, Field } from "./FieldComponents";
+
+const options = {
+  months: [
+    "January", "February", "March", "April", "June", "July",
+    "August", "September", "October", "November", "December"
+  ],
+  years: (() => {
+    const arr = [];
+    const currentYear = new Date().getFullYear();
+    const startYear = 1985;
+
+    for(let i = currentYear; i >= startYear; i--) arr.push(i);
+    return arr;
+  })(),
+  experience: ["Less than 1 year", "1-2 years", "2-3 years", "3-4 years", "4-5 years", "More than 5 years"],
+  degree: ["High School or GED", "Associates", "Bachelors", "Masters", "PhD", "Vocational", "Some College"]
+};
 
 const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) : {
   name: { first: "", last: "" },
@@ -9,7 +26,7 @@ const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) :
 };
 
 function Form({ onSubmit }) {
-  const [segment, setSegment] = useState(0);
+  const [segment, setSegment] = useState(3);
   const segments = [
     [ <Introduction name={cv.name} address={cv.address} contact={cv.contact} />, "Introduction", () => updateCV(false) ],
     [ <Education arr={cv.schools} cnt={cv.schools.length - 1} />, "Education", () => updateCV(true, "schools", "school") ],
@@ -131,29 +148,26 @@ function Introduction({ name, address, contact }) {
 
 function Education({ arr, cnt }) {
   const [schlCnt, setSchlCnt] = useState(Math.max(0, cnt));
+  const [activeDropMenu, setActiveDropMenu] = useState(null);
+  const [dropdownValues, setDropdownValues] = useState({});
   const schools = [];
-  for (let i = 0; i <= schlCnt; i++) schools.push(<School index={i} school={arr[i]} key={i} />);
 
-  function School({ index, school }) {
-    school ? null : school = { name: "", location: "", degree: "", major: "", graddate: "" }
-    return (
-      <div className="segment">
-        <div className="form-section">
-          <Field id={`school-${index}-name`} labelText="School Name" name={`school${index}Name`} value={school.name} />
-          <Field id={`school-${index}-locaiton`} labelText="School Location" name={`school${index}Location`} value={school.location} />
-        </div>
+  for (let i = 0; i <= schlCnt; i++) 
+    schools.push(<School 
+    index={i} 
+    school={arr[i]} 
+    activeDropMenu={activeDropMenu}
+    toggleActive={toggleActive}
+    dropdownValues={dropdownValues}
+    setDropdownValue={setDropdownValue}
+    key={i} />);
 
-        <div className="form-section">
-          <Field id={`school-${index}-degree`} labelText="Degree" name={`school${index}Degree`} value={school.degree} />
-          <span className="field"></span>
-        </div>
+  function toggleActive(id) {
+    setActiveDropMenu(prev => prev !== id && id);
+  };
 
-        <div className="form-section">
-          <Field id={`school-${index}-major`} labelText="Field Of Study" name={`school${index}Major`} value={school.major} />
-          <Field id={`school-${index}-grad-date`} labelText="Graduation Date (Or Expected)" name={`school${index}GradDate`} inputType="date" value={school.graddate} />
-        </div>
-      </div>
-    );
+  function setDropdownValue(id, value) {
+    setDropdownValues(prev => ({ ...prev, [id]: value }));
   };
 
   return (
@@ -170,7 +184,10 @@ function Education({ arr, cnt }) {
         <button 
           className="button add-btn fa-solid fa-plus"
           type="button" 
-          onClick={() => setSchlCnt(schlCnt + 1)}>
+          onClick={() => {
+            toggleActive(null);
+            setSchlCnt(schlCnt + 1);
+          }}>
           Add Another School
         </button>
       </div>
@@ -181,19 +198,26 @@ function Education({ arr, cnt }) {
 
 function Skills({ arr, cnt }) {
   const [skillCnt, setSkillCnt] = useState(Math.max(0, cnt));
+  const [activeDropMenu, setActiveDropMenu] = useState(null);
+  const [dropdownValues, setDropdownValues] = useState({});
   const skills = [];
-  for (let i = 0; i <= skillCnt; i++) skills.push(<Skill index={i} skill={arr[i]} key={i} />);
 
-  function Skill({ index, skill }) {
-    skill ? null : skill = { name: "", experience: "" };
-    return (
-      <div className="segment">
-        <div className="form-section">
-          <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} value={skill.name} />
-          <Field id={`skill-${index}-experience`} labelText="Experience" name={`skill${index}Experience`} value={skill.experience} />
-        </div>
-      </div>
-    );
+  for (let i = 0; i <= skillCnt; i++) 
+    skills.push(<Skill 
+    index={i} 
+    skill={arr[i]}
+    activeDropMenu={activeDropMenu}
+    toggleActive={toggleActive}
+    dropdownValues={dropdownValues}
+    setDropdownValue={setDropdownValue}
+    key={i} />);
+
+  function toggleActive(id) {
+    setActiveDropMenu(prev => prev !== id && id);
+  };
+
+  function setDropdownValue(id, value) {
+    setDropdownValues(prev => ({ ...prev, [id]: value }));
   };
 
   return (
@@ -210,7 +234,10 @@ function Skills({ arr, cnt }) {
         <button 
           className="button add-btn fa-solid fa-plus"
           type="button" 
-          onClick={() => setSkillCnt(skillCnt + 1)}>
+          onClick={() => {
+            toggleActive(null);
+            setSkillCnt(skillCnt + 1);
+          }}>
           Add Another Skill
         </button>
       </div>
@@ -218,26 +245,28 @@ function Skills({ arr, cnt }) {
   );
 };
 
-
 function Experience({ arr, cnt }) {
   const [jobCnt, setJobCnt] = useState(Math.max(0, cnt));
+  const [activeDropMenu, setActiveDropMenu] = useState(null);
+  const [dropdownValues, setDropdownValues] = useState({});
   const jobs = [];
-  for (let i = 0; i <= jobCnt; i++) jobs.push(<Job index={i} work={arr[i]} key={`job${i}`} />);
 
-  function Job({ index, work }) {
-    work ? null : work = { name: "", employer: "", from: "", to: "" };
-    return (
-      <div className="segment">
-        <div className="form-section">
-          <Field id={`work-${index}-name`} labelText="Job" name={`work${index}Name`} value={work.name} />
-          <Field id={`work-${index}-employer`} labelText="Employer" name={`work${index}Employer`} value={work.employer} />
-        </div>
-        <div className="form-section">
-          <Field id={`work-${index}-from`} labelText="From" name={`work${index}From`} inputType="date" value={work.from} />
-          <Field id={`work-${index}-to`} labelText="To" name={`work${index}To`} inputType="date" value={work.to} />
-        </div>
-      </div>
-    );
+  for (let i = 0; i <= jobCnt; i++) 
+    jobs.push(<Job 
+    index={i} 
+    skill={arr[i]}
+    activeDropMenu={activeDropMenu}
+    toggleActive={toggleActive}
+    dropdownValues={dropdownValues}
+    setDropdownValue={setDropdownValue}
+    key={`job${i}`} />);
+
+  function toggleActive(id) {
+    setActiveDropMenu(prev => prev !== id && id);
+  };
+
+  function setDropdownValue(id, value) {
+    setDropdownValues(prev => ({ ...prev, [id]: value }));
   };
 
   return (
@@ -255,9 +284,153 @@ function Experience({ arr, cnt }) {
         <button
           className="button add-btn fa-solid fa-plus"
           type="button"
-          onClick={() => setJobCnt(jobCnt + 1)}>
+          onClick={() => {
+            toggleActive(null);
+            setJobCnt(jobCnt + 1);
+          }}>
           Add Another Work Experience
         </button>
+      </div>
+    </div>
+  );
+};
+
+function School({ index, school, activeDropMenu, toggleActive, dropdownValues, setDropdownValue }) {
+  const monthId = `school-${index}-grad-month`;
+  const yearId = `school-${index}-grad-year`;
+  const degreeId = `school-${index}-degree`;
+  school ? null : school = { name: "", location: "", degree: "", major: "", graddate: "" }
+  
+  return (
+    <div className="segment">
+      <div className="form-section">
+        <Field id={`school-${index}-name`} labelText="School Name" name={`school${index}Name`} value={school.name} />
+        <Field id={`school-${index}-locaiton`} labelText="School Location" name={`school${index}Location`} value={school.location} />
+      </div>
+
+      <div className="form-section">
+        <div className="field">
+          <label className="field-label">Degree</label>
+          <Dropdown 
+            id={degreeId}
+            isActive={activeDropMenu === degreeId}
+            toggleActive={() => toggleActive(degreeId)}
+            value={dropdownValues[degreeId]}
+            setValue={newValue => setDropdownValue(degreeId, newValue)}>
+            {options.degree}
+          </Dropdown>
+        </div>
+        <span className="field"></span>
+      </div>
+
+      <div className="form-section">
+        <Field id={`school-${index}-major`} labelText="Field Of Study" name={`school${index}Major`} value={school.major} />
+        <div className="field">
+          <label className="field-label">Graduation Date(Or Expected)</label>
+          <div className="form-sub-section">
+            <Dropdown 
+              id={monthId}
+              isActive={activeDropMenu === monthId}
+              toggleActive={() => toggleActive(monthId)}
+              value={dropdownValues[monthId]}
+              setValue={newValue => setDropdownValue(monthId, newValue)}>
+              {options.months}
+            </Dropdown>
+            <Dropdown 
+              id={yearId}
+              isActive={activeDropMenu === yearId}
+              toggleActive={() => toggleActive(yearId)}
+              value={dropdownValues[yearId]}
+              setValue={newValue => setDropdownValue(yearId, newValue)}>
+              {options.years}
+            </Dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+function Skill({ index, skill, activeDropMenu, toggleActive, dropdownValues, setDropdownValue }) {
+  const experienceId = `skill-${index}-experience`;
+  skill ? null : skill = { name: "", experience: "" };
+
+  return (
+    <div className="segment">
+      <div className="form-section">
+        <Field id={`skill-${index}-name`} labelText="Skill" name={`skill${index}Name`} value={skill.name} />
+        <div className="field">
+          <label className="field-label">Experience</label>
+          <Dropdown 
+            id={experienceId}
+            isActive={activeDropMenu === experienceId}
+            toggleActive={() => toggleActive(experienceId)}
+            value={dropdownValues[experienceId]}
+            setValue={newValue => setDropdownValue(experienceId, newValue)}>
+            {options.experience}
+          </Dropdown>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDropdownValue }) {
+  const monthStartId = `work-${index}-start-month`;
+  const yearStartId = `work-${index}-start-year`;
+  const monthEndId = `work-${index}-end-month`;
+  const yearEndId = `work-${index}-end-year`;
+  work ? null : work = { name: "", employer: "", from: "", to: "" };
+  
+  return (
+    <div className="segment">
+      <div className="form-section">
+        <Field id={`work-${index}-name`} labelText="Job" name={`work${index}Name`} value={work.name} />
+        <Field id={`work-${index}-employer`} labelText="Employer" name={`work${index}Employer`} value={work.employer} />
+      </div>
+      <div className="form-section">
+        <div className="field">
+          <label className="field-label">From</label>
+          <div className="form-sub-section">
+          <Dropdown 
+            id={monthStartId}
+            isActive={activeDropMenu === monthStartId}
+            toggleActive={() => toggleActive(monthStartId)}
+            value={dropdownValues[monthStartId]}
+            setValue={newValue => setDropdownValue(monthStartId, newValue)}>
+            {options.months}
+          </Dropdown>
+          <Dropdown 
+            id={yearStartId}
+            isActive={activeDropMenu === yearStartId}
+            toggleActive={() => toggleActive(yearStartId)}
+            value={dropdownValues[yearStartId]}
+            setValue={newValue => setDropdownValue(yearStartId, newValue)}>
+            {options.years}
+          </Dropdown>
+          </div>
+        </div>
+        <div className="field">
+          <label className="field-label">To</label>
+          <div className="form-sub-section">
+          <Dropdown 
+            id={monthEndId}
+            isActive={activeDropMenu === monthEndId}
+            toggleActive={() => toggleActive(monthEndId)}
+            value={dropdownValues[monthEndId]}
+            setValue={newValue => setDropdownValue(monthEndId, newValue)}>
+            {options.months}
+          </Dropdown>
+          <Dropdown 
+            id={yearEndId}
+            isActive={activeDropMenu === yearEndId}
+            toggleActive={() => toggleActive(yearEndId)}
+            value={dropdownValues[yearEndId]}
+            setValue={newValue => setDropdownValue(yearEndId, newValue)}>
+            {options.years}
+          </Dropdown>
+          </div>
+        </div>
       </div>
     </div>
   );

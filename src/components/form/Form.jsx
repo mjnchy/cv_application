@@ -254,7 +254,7 @@ function Experience({ arr, cnt }) {
   for (let i = 0; i <= jobCnt; i++) 
     jobs.push(<Job 
     index={i} 
-    skill={arr[i]}
+    work={arr[i]}
     activeDropMenu={activeDropMenu}
     toggleActive={toggleActive}
     dropdownValues={dropdownValues}

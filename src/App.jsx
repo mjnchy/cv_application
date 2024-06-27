@@ -3,8 +3,7 @@ import SidePanel from "./components/SidePanel";
 import CV from "./components/cv/template1/cv";
 import Form from "./components/form/Form";
 
-const cv = null;
-// JSON.parse(localStorage.getItem("cv"));
+const cv = JSON.parse(localStorage.getItem("cv"));
 
 function App() {
   const [submitted, setSubmitted] = useState(cv && true);

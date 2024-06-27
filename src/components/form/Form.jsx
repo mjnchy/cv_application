@@ -3,8 +3,8 @@ import { Dropdown, Field } from "./FieldComponents";
 
 const options = {
   months: [
-    "January", "February", "March", "April", "June", "July",
-    "August", "September", "October", "November", "December"
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ],
   years: (() => {
     const arr = [];
@@ -26,7 +26,7 @@ const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) :
 };
 
 function Form({ onSubmit }) {
-  const [segment, setSegment] = useState(3);
+  const [segment, setSegment] = useState(0);
   const segments = [
     [ <Introduction name={cv.name} address={cv.address} contact={cv.contact} />, "Introduction", () => updateCV(false) ],
     [ <Education arr={cv.schools} cnt={cv.schools.length - 1} />, "Education", () => updateCV(true, "schools", "school") ],
@@ -299,7 +299,7 @@ function School({ index, school, activeDropMenu, toggleActive, dropdownValues, s
   const monthId = `school-${index}-grad-month`;
   const yearId = `school-${index}-grad-year`;
   const degreeId = `school-${index}-degree`;
-  school ? null : school = { name: "", location: "", degree: "", major: "", graddate: "" }
+  school = school || { name: "", location: "", degree: "", major: "", gradmonth: "", gradyear: "" }
   
   return (
     <div className="segment">
@@ -315,7 +315,7 @@ function School({ index, school, activeDropMenu, toggleActive, dropdownValues, s
             id={degreeId}
             isActive={activeDropMenu === degreeId}
             toggleActive={() => toggleActive(degreeId)}
-            value={dropdownValues[degreeId]}
+            value={dropdownValues[degreeId] || school.degree}
             setValue={newValue => setDropdownValue(degreeId, newValue)}>
             {options.degree}
           </Dropdown>
@@ -332,7 +332,7 @@ function School({ index, school, activeDropMenu, toggleActive, dropdownValues, s
               id={monthId}
               isActive={activeDropMenu === monthId}
               toggleActive={() => toggleActive(monthId)}
-              value={dropdownValues[monthId]}
+              value={dropdownValues[monthId] || school.gradmonth}
               setValue={newValue => setDropdownValue(monthId, newValue)}>
               {options.months}
             </Dropdown>
@@ -340,7 +340,7 @@ function School({ index, school, activeDropMenu, toggleActive, dropdownValues, s
               id={yearId}
               isActive={activeDropMenu === yearId}
               toggleActive={() => toggleActive(yearId)}
-              value={dropdownValues[yearId]}
+              value={dropdownValues[yearId] || school.gradyear}
               setValue={newValue => setDropdownValue(yearId, newValue)}>
               {options.years}
             </Dropdown>
@@ -353,7 +353,7 @@ function School({ index, school, activeDropMenu, toggleActive, dropdownValues, s
 
 function Skill({ index, skill, activeDropMenu, toggleActive, dropdownValues, setDropdownValue }) {
   const experienceId = `skill-${index}-experience`;
-  skill ? null : skill = { name: "", experience: "" };
+  skill = skill || { name: "", experience: "" };
 
   return (
     <div className="segment">
@@ -365,7 +365,7 @@ function Skill({ index, skill, activeDropMenu, toggleActive, dropdownValues, set
             id={experienceId}
             isActive={activeDropMenu === experienceId}
             toggleActive={() => toggleActive(experienceId)}
-            value={dropdownValues[experienceId]}
+            value={dropdownValues[experienceId] || skill.experience}
             setValue={newValue => setDropdownValue(experienceId, newValue)}>
             {options.experience}
           </Dropdown>
@@ -380,7 +380,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
   const yearStartId = `work-${index}-start-year`;
   const monthEndId = `work-${index}-end-month`;
   const yearEndId = `work-${index}-end-year`;
-  work ? null : work = { name: "", employer: "", from: "", to: "" };
+  work = work || { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "" };
   
   return (
     <div className="segment">
@@ -396,7 +396,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
             id={monthStartId}
             isActive={activeDropMenu === monthStartId}
             toggleActive={() => toggleActive(monthStartId)}
-            value={dropdownValues[monthStartId]}
+            value={dropdownValues[monthStartId] || work.startmonth}
             setValue={newValue => setDropdownValue(monthStartId, newValue)}>
             {options.months}
           </Dropdown>
@@ -404,7 +404,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
             id={yearStartId}
             isActive={activeDropMenu === yearStartId}
             toggleActive={() => toggleActive(yearStartId)}
-            value={dropdownValues[yearStartId]}
+            value={dropdownValues[yearStartId] || work.startyear}
             setValue={newValue => setDropdownValue(yearStartId, newValue)}>
             {options.years}
           </Dropdown>
@@ -417,7 +417,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
             id={monthEndId}
             isActive={activeDropMenu === monthEndId}
             toggleActive={() => toggleActive(monthEndId)}
-            value={dropdownValues[monthEndId]}
+            value={dropdownValues[monthEndId] || work.endmonth}
             setValue={newValue => setDropdownValue(monthEndId, newValue)}>
             {options.months}
           </Dropdown>
@@ -425,7 +425,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
             id={yearEndId}
             isActive={activeDropMenu === yearEndId}
             toggleActive={() => toggleActive(yearEndId)}
-            value={dropdownValues[yearEndId]}
+            value={dropdownValues[yearEndId] || work.endyear}
             setValue={newValue => setDropdownValue(yearEndId, newValue)}>
             {options.years}
           </Dropdown>

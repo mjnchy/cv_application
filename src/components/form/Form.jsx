@@ -380,7 +380,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
   const yearStartId = `work-${index}-start-year`;
   const monthEndId = `work-${index}-end-month`;
   const yearEndId = `work-${index}-end-year`;
-  work = work || { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "" };
+  work = work || { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "", location: "" };
   
   return (
     <div className="segment">
@@ -388,6 +388,12 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
         <Field id={`work-${index}-name`} labelText="Job" name={`work${index}Name`} value={work.name} />
         <Field id={`work-${index}-employer`} labelText="Employer" name={`work${index}Employer`} value={work.employer} />
       </div>
+      
+      <div className="form-section">
+        <Field id={`work-${index}-location`} labelText="Location" name={`work${index}Location`} value={work.location} />
+        <div className="field"></div>
+      </div>
+
       <div className="form-section">
         <div className="field">
           <label className="field-label">From</label>

@@ -1,13 +1,14 @@
-.cv {
-  height: 98vh;
-  width: 90%;
-  /* max-width: 794px; */
+.cv { 
+  width: 95%;
+  max-width: 794px;
+  aspect-ratio: 1 / 1.414;
   display: flex;
   margin: auto;
   position: relative;
   top: 1vh;
   border-radius: 1rem;
   overflow: hidden;
+  gap: 25px;
 }
 
 .cv-left {
@@ -18,7 +19,7 @@
   flex: 1;
 }
 
-.cv-header, .cv-title, .cv-section-dec {
+.cv-header, .cv-title, .cv-dec, .milestone-header {
   font-weight: 800;
 }
 
@@ -35,9 +36,9 @@
   background-color: #000;
 }
 
-.cv-section-dec {
-  font-size: 1.6rem;
-  padding: 10px 5px;
+.cv-dec {
+  font-size: 1.8rem;
+  padding: 1rem 0.5rem;
   margin: 1rem 1.5rem;
 }
 
@@ -59,4 +60,30 @@
   height: 100%;
   width: 100%;
   flex: 3;
+}
+
+.cv-dec.right {
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.milestone {
+  display: flex;
+  width: 100%;
+  margin: 2rem auto;
+  line-height: 1.75;
+  font-size: 1.5rem;
+  list-style: none;
+}
+
+.milestone-date {
+  flex: 2;
+}
+
+.milestone-info {
+  flex: 5;
+}
+
+.milestone-header {
+  font-size: 1.8rem;
 }

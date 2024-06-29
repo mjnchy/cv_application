@@ -54,14 +54,16 @@ function Form({ onSubmit }) {
     const formData = [...new FormData(document.querySelector(".form")).entries()];
 
     if (iterable === false) {
-      const keys = Object.keys(cv).slice(0, 3);
+      const keys = Object.keys(cv).slice(0, 4);
       let pointer = 0;
       for (let i = 0; i < keys.length; i++) {
-        const innerKeys = Object.keys(cv[keys[i]]);
-        for (let j = 0; j < innerKeys.length; j++) {
-          cv[keys[i]][innerKeys[j]] = formData[pointer][1];
-          pointer++;
-        };
+        if(typeof(cv[keys[i]]) !== "object") cv[keys[i]] = formData[pointer][1]
+        else {
+          const innerKeys = Object.keys(cv[keys[i]]);
+          for (let j = 0; j < innerKeys.length; j++) {
+            cv[keys[i]][innerKeys[j]] = formData[pointer][1];
+            pointer++;
+          }};
       };
     } else {
       const length = parseInt(formData.at(-1)[0].slice(str.length, str.length + 1));
@@ -74,7 +76,7 @@ function Form({ onSubmit }) {
         cv[type][index][prop] = formData[i][1];
       };
     };
-    segment >= segments.length - 1 ? null : updateSegment(segment + 1);
+    segment < segments.length - 1 && updateSegment(segment + 1);
   };
 
   function updateSegment(newSegment) {
@@ -163,7 +165,7 @@ function Introduction({ name, address, contact, intro }) {
             id="intro" 
             name="intro"
             labelText="Provide a brief introduction about yourself within 500 characters."
-            maxLength={500}
+            maxLength={300}
             value={intro} />
         </div>
       </div>
@@ -405,6 +407,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
   const yearStartId = `work-${index}-start-year`;
   const monthEndId = `work-${index}-end-month`;
   const yearEndId = `work-${index}-end-year`;
+  const textId = `work-${index}-responsibilities`;
   work = work || { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "", location: "" };
   
   return (
@@ -462,6 +465,15 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
           </Dropdown>
           </div>
         </div>
+      </div>
+
+      <div className="form-section">
+        <Textarea 
+          id={textId}
+          labelText="Describe some accomplishments from this job.
+          (Each accomplishment must be only one sentece and all accomlishments must be separated by a period)."
+          maxLength={1000}
+          value="" />
       </div>
     </div>
   );

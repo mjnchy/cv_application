@@ -162,7 +162,7 @@
 .text-area {
   resize: none;
   height: 100px;
-  padding: 5px 10px;
+  padding: 5px 10pX;
 }
 
 .field-input:focus, .text-area:focus {

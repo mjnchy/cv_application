@@ -10,7 +10,7 @@ function Field({ id, name, labelText, inputType="text", value }) {
 function Textarea({ id, name, labelText, value, maxLength }) {
   return <div className="field text-area-container">
     <label className="field-label" htmlFor={id}>{labelText}</label>
-    <textarea className="text-area" id={id} maxLength={maxLength} name={name} defaultValue={value} />
+    <textarea className="text-area" spellCheck id={id} maxLength={maxLength} name={name} defaultValue={value} />
   </div>
 };
 

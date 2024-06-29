@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { Dropdown, Field, Textarea } from "./FieldComponents";
 
-const options = {
-  months: [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ],
-  years: (() => {
+const options = (() => {
+  const getYears = (year = new Date().getFullYear()) => {
     const arr = [];
-    const currentYear = new Date().getFullYear();
+    const currentYear = year;
     const startYear = 1985;
 
     for(let i = currentYear; i >= startYear; i--) arr.push(i);
     return arr;
-  })(),
-  experience: ["Less than 1 year", "1-2 years", "2-3 years", "3-4 years", "4-5 years", "More than 5 years"],
-  degree: ["High School or GED", "Associates", "Bachelors", "Masters", "PhD", "Vocational", "Some College"]
-};
+  };
+
+  return {
+    months: [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ],
+    years: getYears(),
+    futureYears: getYears(new Date().getFullYear() + 5),
+    experience: ["Less than 1 year", "1-2 years", "2-3 years", "3-4 years", "4-5 years", "More than 5 years"],
+    degree: ["High School or GED", "Associates", "Bachelors", "Masters", "PhD", "Vocational", "Some College"]
+  }
+})();
 
 const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) : {
   name: { first: "", last: "" },
@@ -370,7 +375,7 @@ function School({ index, school, activeDropMenu, toggleActive, dropdownValues, s
               toggleActive={() => toggleActive(yearId)}
               value={dropdownValues[yearId] || school.gradyear}
               setValue={newValue => setDropdownValue(yearId, newValue)}>
-              {options.years}
+              {options.futureYears}
             </Dropdown>
           </div>
         </div>
@@ -409,7 +414,7 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
   const monthEndId = `work-${index}-end-month`;
   const yearEndId = `work-${index}-end-year`;
   const textId = `work-${index}-responsibilities`;
-  const limit = 1000;
+  const limit = 350;
   work = work || 
     { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "", location: "", responsibilities: "" };
   
@@ -475,7 +480,8 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
           id={textId}
           name={`work${index}Responsibilities`}
           labelText={`Describe some accomplishments from this job.
-          (Please keep the accomplishments only one sentence each and separate them by a period and space.).`}
+          (Please keep the accomplishments only one sentence each and separate them by a period and space 
+          [Character limit: ${limit}]).`}
           value={work.responsibilities}
           maxLength={limit} />
       </div>

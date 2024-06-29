@@ -51,9 +51,14 @@
   line-height: 2;
 }
 
-.cv-skill {
+.cv-skill-list {
   line-height: 1.75;
   list-style: disc inside;
+}
+
+.cv-skill {
+  padding-left: 1rem;
+  text-indent: -1.1rem;
 }
 
 .cv-right {
@@ -63,7 +68,7 @@
 }
 
 .intro {
-  margin: 2rem auto;
+  margin: 0.5rem auto;
   font-size: 1.4rem;
   line-height: 1.5;
 }
@@ -92,4 +97,21 @@
 
 .milestone-header {
   font-size: 1.8rem;
+}
+
+.milestone-organization-info {
+  font-size: 1.8rem;
+  color: #3F3F3F;
+  font-style: italic;
+  margin: auto auto 1rem;
+}
+
+.milestone-list {
+  list-style: inside disc;
+}
+
+.milestone-li {
+  font-size: 1.4rem;
+  padding-left: 1rem;
+  text-indent: -1.5rem;
 }

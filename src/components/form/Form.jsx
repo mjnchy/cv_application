@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dropdown, Field } from "./FieldComponents";
+import { Dropdown, Field, Textarea } from "./FieldComponents";
 
 const options = {
   months: [
@@ -21,17 +21,33 @@ const options = {
 const cv = localStorage.getItem("cv") ? JSON.parse(localStorage.getItem("cv")) : {
   name: { first: "", last: "" },
   address: { city: "", region: "", zip: "" },
-  contact: { email: "", phone: ""},
+  contact: { email: "", phone: ""}, intro: "",
   schools: [], skills: [], experience: []
 };
 
 function Form({ onSubmit }) {
   const [segment, setSegment] = useState(0);
   const segments = [
-    [ <Introduction name={cv.name} address={cv.address} contact={cv.contact} />, "Introduction", () => updateCV(false) ],
-    [ <Education arr={cv.schools} cnt={cv.schools.length - 1} />, "Education", () => updateCV(true, "schools", "school") ],
-    [ <Skills arr={cv.skills} cnt={cv.skills.length - 1} />, "Skills", () => updateCV(true, "skills", "skill") ],
-    [ <Experience arr={cv.experience} cnt={cv.experience.length - 1} />, "Work Experience", () => updateCV(true, "experience", "work") ]
+    [
+      <Introduction name={cv.name} address={cv.address} contact={cv.contact} intro={cv.intro} />,
+      "Introduction",
+      () => updateCV(false)
+    ],
+    [ 
+      <Education arr={cv.schools} cnt={cv.schools.length - 1} />,
+      "Education",
+      () => updateCV(true, "schools", "school")
+    ],
+    [ 
+      <Skills arr={cv.skills} cnt={cv.skills.length - 1} />,
+      "Skills",
+      () => updateCV(true, "skills", "skill")
+    ],
+    [ 
+      <Experience arr={cv.experience} cnt={cv.experience.length - 1} />,
+      "Work Experience",
+      () => updateCV(true, "experience", "work")
+    ]
   ];
 
   function updateCV(iterable, type, str) {
@@ -113,7 +129,7 @@ function Form({ onSubmit }) {
   );
 };
 
-function Introduction({ name, address, contact }) {
+function Introduction({ name, address, contact, intro }) {
   return (
     <div className="form-page">
       <div className="form-welcome">
@@ -125,21 +141,30 @@ function Introduction({ name, address, contact }) {
 
       <div className="introduction form-container">
         <div className="name form-section">
-          <Field id="first-name" labelText="First Name *" name="first" value={name.first} />
-          <Field id="last-name" labelText="Last Name *" name="last"  value={name.last} />
+          <Field id="first-name" name="first" labelText="First Name" value={name.first} />
+          <Field id="last-name" name="last" labelText="Last Name" value={name.last} />
         </div>
 
         <div className="location form-section">
-          <Field id="city" labelText="City" name="city" value={address.city} />
+          <Field id="city" name="city" labelText="City" value={address.city} />
           <div className="form-sub-section">
-            <Field id="region" labelText="State/Province" name="region" value={address.region} />
-            <Field id="zip" labelText="Zip Code" name="zip" value={address.zip} />
+            <Field id="region" name="region" labelText="State/Province" value={address.region} />
+            <Field id="zip" name="zip" labelText="Zip Code" value={address.zip} />
           </div>
         </div>
 
         <div className="contact form-section">
-          <Field id="email" labelText="Email *" name="email" value={contact.email} />
-          <Field id="phone" labelText="Phone" name="phone" value={contact.phone} />
+          <Field id="email" name="email" labelText="Email" value={contact.email} />
+          <Field id="phone" name="phone" labelText="Phone" value={contact.phone} />
+        </div>
+
+        <div className="self-intro form-section">
+          <Textarea 
+            id="intro" 
+            name="intro"
+            labelText="Provide a brief introduction about yourself within 500 characters."
+            maxLength={500}
+            value={intro} />
         </div>
       </div>
     </div>

@@ -1,10 +1,17 @@
-function Field({ id, labelText, inputType="text", name, value }) {
+function Field({ id, name, labelText, inputType="text", value }) {
   return (
     <div className="field">
       <label className="field-label" htmlFor={id}>{labelText}</label>
       <input className="field-input" id={id} type={inputType} name={name} defaultValue={value} />
     </div>
   );
+};
+
+function Textarea({ id, name, labelText, value, maxLength }) {
+  return <div className="field text-area-container">
+    <label className="field-label" htmlFor={id}>{labelText}</label>
+    <textarea className="text-area" id={id} maxLength={maxLength} name={name} defaultValue={value} />
+  </div>
 };
 
 function Dropdown({ id, children, isActive, toggleActive, value, setValue }) {
@@ -34,9 +41,9 @@ function Dropdown({ id, children, isActive, toggleActive, value, setValue }) {
 
   return <div className="dropdown" onClick={toggleActive}>
     <input className="dropdown-value" tabIndex={-1} placeholder={placeHolders[index]} name={name} value={value} onChange={() => {}} />
-    <button className="fa-solid fa-caret-down dropdown-icon"></button>
+    <button className={`fa-solid ${isActive && "fa-caret-up" || "fa-caret-down"} dropdown-icon`}></button>
     {isActive && <ul className="dropdown-list">{li}</ul>}
   </div>
 };
 
-export { Field, Dropdown };
+export { Field, Dropdown, Textarea };

@@ -5,10 +5,11 @@
   display: flex;
   margin: auto;
   position: relative;
-  top: 1vh;
+  top: 11vh;
   border-radius: 1rem;
   overflow: hidden;
   gap: 25px;
+  box-shadow: 0 0 10px 2px;
 }
 
 .cv-left {

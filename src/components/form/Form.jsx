@@ -132,6 +132,7 @@ function Form({ onSubmit }) {
 };
 
 function Introduction({ name, address, contact, intro }) {
+  const limit = 300;
   return (
     <div className="form-page">
       <div className="form-welcome">
@@ -164,8 +165,8 @@ function Introduction({ name, address, contact, intro }) {
           <Textarea 
             id="intro" 
             name="intro"
-            labelText="Provide a brief introduction about yourself within 500 characters."
-            maxLength={300}
+            labelText={`Provide a brief introduction about yourself within ${limit} characters.`}
+            maxLength={limit}
             value={intro} />
         </div>
       </div>
@@ -408,7 +409,9 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
   const monthEndId = `work-${index}-end-month`;
   const yearEndId = `work-${index}-end-year`;
   const textId = `work-${index}-responsibilities`;
-  work = work || { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "", location: "" };
+  const limit = 1000;
+  work = work || 
+    { name: "", employer: "", startmonth: "", startyear: "", endmonth: "", endyear: "", location: "", responsibilities: "" };
   
   return (
     <div className="segment">
@@ -470,10 +473,11 @@ function Job({ index, work, activeDropMenu, toggleActive, dropdownValues, setDro
       <div className="form-section">
         <Textarea 
           id={textId}
-          labelText="Describe some accomplishments from this job.
-          (Each accomplishment must be only one sentece and all accomlishments must be separated by a period)."
-          maxLength={1000}
-          value="" />
+          name={`work${index}Responsibilities`}
+          labelText={`Describe some accomplishments from this job.
+          (Please keep the accomplishments only one sentence each and separate them by a period and space.).`}
+          value={work.responsibilities}
+          maxLength={limit} />
       </div>
     </div>
   );
